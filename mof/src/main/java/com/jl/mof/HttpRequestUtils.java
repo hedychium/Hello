@@ -11,13 +11,18 @@ import net.sf.json.JSONObject;
 
 import org.apache.http.*;
 import org.apache.http.client.*;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 public class HttpRequestUtils {
 	/**
@@ -274,5 +279,55 @@ public class HttpRequestUtils {
         }  
         return result;
     }
+    
+	
+	public static String sendWithFile2(CookieStore cookieStore,String postUrl,String filePath) {
+		String respStr = "";
+		// 创建HttpClientBuilder  
+        HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();  
+        // HttpClient  
+        CloseableHttpClient closeableHttpClient = null;  
+        if(cookieStore!=null){  
+            closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
+        }else{  
+            closeableHttpClient = httpClientBuilder.build();  
+        }  
+        HttpPost httpPost = new HttpPost(postUrl);
+        FileBody fileBody = new FileBody(new File(filePath));
+        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+        multipartEntityBuilder.addPart("file",fileBody);
+
+        HttpEntity reqEntity  = multipartEntityBuilder.build();
+        httpPost.setEntity(reqEntity);
+        try {
+            CloseableHttpResponse response =  closeableHttpClient.execute(httpPost);
+            System.out.println("上传之后返回的状态码:"+response.getStatusLine().getStatusCode());
+            try {
+                HttpEntity resEntity = response.getEntity();              
+              
+                if (resEntity == null) {
+                }
+                InputStream is = resEntity.getContent();
+                StringBuffer strBuf = new StringBuffer();
+                byte[] buffer = new byte[4096];
+                int r = 0;
+                while ((r = is.read(buffer)) > 0) {
+                    strBuf.append(new String(buffer, 0, r, "UTF-8"));
+                }
+                System.out.println("resp=" + respStr);               
+                
+                EntityUtils.consume(reqEntity);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
             
+              response.close();
+              closeableHttpClient.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return respStr;
+	}
 }

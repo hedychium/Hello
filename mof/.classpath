@@ -38,5 +38,14 @@
 	<classpathentry kind="lib" path="/TestAttribution/lib/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="/TestAttribution/lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="/TestAttribution/lib/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/Users/jiangli/.m2/repository/org/apache/httpcomponents/httpmime/4.5.5/httpmime-4.5.5.jar">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
+			<attribute name="maven.artifactId" value="httpmime"/>
+			<attribute name="maven.version" value="4.5.5"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

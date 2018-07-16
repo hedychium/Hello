@@ -1,5 +1,6 @@
 package com.jl.mof;
 
+import java.io.File;
 import java.util.ArrayList;  
 import java.util.Iterator;
 import java.util.List;  
@@ -23,11 +24,14 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.http.HttpEntity;  
 import org.apache.http.HttpResponse;  
 import org.apache.http.NameValuePair;  
-import org.apache.http.client.CookieStore;  
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;  
 import org.apache.http.client.entity.UrlEncodedFormEntity;  
 import org.apache.http.client.methods.CloseableHttpResponse;  
-import org.apache.http.client.methods.HttpPost;  
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicCookieStore;  
 import org.apache.http.impl.client.CloseableHttpClient;  
@@ -35,7 +39,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.cookie.BasicClientCookie;  
 import org.apache.http.message.BasicNameValuePair;  
-import org.apache.http.util.EntityUtils;  
+import org.apache.http.util.EntityUtils;
 
  
 public class LoginWithHttpclient {  
@@ -78,8 +82,8 @@ public class LoginWithHttpclient {
         // 新建一个Cookie  
         BasicClientCookie cookie = new BasicClientCookie("JSESSIONID",JSESSIONID);  
         cookie.setVersion(0);  
-        cookie.setDomain("domain");  
-        cookie.setPath("/xxx");  
+       //cookie.setDomain("domain");  
+       //cookie.setPath("/xxx");  
         cookieStore.addCookie(cookie);  
     }  
     /**
@@ -88,16 +92,16 @@ public class LoginWithHttpclient {
      * @param map
      * @return
      */
-    public static String doPost2(String postUrl,Map<String, Object> map, String charset) {  
+    public static HttpClient doPost2(String postUrl,Map<String, Object> map, String charset) {  
         String retStr = "";  
         // 创建HttpClientBuilder  
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();  
         // HttpClient  
-        CloseableHttpClient closeableHttpClient = null;  
+        HttpClient httpClient = null;  
         if(cookieStore!=null){  
-            closeableHttpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
+        	httpClient = httpClientBuilder.setDefaultCookieStore(cookieStore).build();  
         }else{  
-            closeableHttpClient = httpClientBuilder.build();  
+        	httpClient = httpClientBuilder.build();  
         }  
         HttpPost httpPost = new HttpPost(postUrl); 
         httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
@@ -113,19 +117,19 @@ public class LoginWithHttpclient {
 		    entity.setContentType("application/json");  
 		    httpPost.setEntity(entity); 
           
-            CloseableHttpResponse response = closeableHttpClient.execute(httpPost);
+            HttpResponse response = httpClient.execute(httpPost);
             System.out.println(response.toString());
             setCookieStore(response);
   
             HttpEntity httpEntity = response.getEntity();  
             retStr = EntityUtils.toString(httpEntity, "UTF-8");  
             System.out.println(retStr); 
-          
-            // 释放资源  
-//            closeableHttpClient.close();  
+   
+ 
         } catch (Exception e) {  
         }  
-        return retStr;  
+        
+        return httpClient;  
     }
     
     
@@ -185,14 +189,15 @@ public class LoginWithHttpclient {
         Map<String,Object>	params=new HashedMap();
 		params.put("password", "123456");
 		params.put("username", "user115@datayes.com");
-		CloseableHttpClient closeableHttpClient = HttpClients.createDefault();
+		HttpClient httpClient = HttpClients.createDefault();
         //第一次登录会保存cookie
-        doPost2(loginUrl,params,"utf-8");
+		doPost2(loginUrl,params,"utf-8");
+		
         
         String filePath= "./File/配置户_月度数据统计表_97_2018-01-31.xlsx";
-		String re=HttpRequestUtils.sendPostWithFile("http://momrpt-ci.wmcloud-qa.com/finbook/v2/api/report/65058/upload",filePath);
-		System.out.println(re); 
-           
+        File file=new File(filePath);
+		String re=HttpRequestUtils.sendWithFile2(cookieStore,"http://momrpt-ci.wmcloud-qa.com/finbook/v2/api/report/65058/upload",filePath);
+		System.out.println(re);            
 		
 	}
 

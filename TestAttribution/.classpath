@@ -9,25 +9,21 @@
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/json-lib-2.4-jdk15.jar" sourcepath="D:/Repositories/Maven/com/hynnet/json-lib/2.4/json-lib-2.4-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/poi/poi/3.9/poi-3.9.jar"/>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/poi/poi-ooxml/3.10-FINAL/poi-ooxml-3.10-FINAL.jar"/>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/poi/poi-ooxml-schemas/3.10-FINAL/poi-ooxml-schemas-3.10-FINAL.jar"/>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/xmlbeans/xmlbeans/2.3.0/xmlbeans-2.3.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/httpcomponents/httpclient/4.5.5/httpclient-4.5.5.jar">
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="/HttpClientUploadFile/pom.xml"/>
+	<classpathentry kind="lib" path="/Users/jiangli/.m2/repository/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
-			<attribute name="maven.artifactId" value="httpclient"/>
-			<attribute name="maven.version" value="4.5.5"/>
+			<attribute name="maven.groupId" value="com.google.code.gson"/>
+			<attribute name="maven.artifactId" value="gson"/>
+			<attribute name="maven.version" value="2.8.2"/>
 			<attribute name="maven.scope" value="compile"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9.jar" sourcepath="D:/Repositories/Maven/org/apache/httpcomponents/httpcore/4.4.9/httpcore-4.4.9-sources.jar"/>
-	<classpathentry kind="lib" path="D:/Repositories/Maven/com/google/code/gson/gson/2.8.2/gson-2.8.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
