@@ -24,6 +24,7 @@ import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+
 public class HttpRequestUtils {
 	/**
 	 * @Description:使用HttpClient发送post请求"Content-Type", "application/json;charset=utf-8"
@@ -281,7 +282,7 @@ public class HttpRequestUtils {
     }
     
 	
-	public static String sendWithFile2(CookieStore cookieStore,String postUrl,String filePath) {
+	public static String sendWithFile2(CookieStore cookieStore,String cookie,String postUrl,String filePath) {
 		String respStr = "";
 		// 创建HttpClientBuilder  
         HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();  
@@ -293,15 +294,21 @@ public class HttpRequestUtils {
             closeableHttpClient = httpClientBuilder.build();  
         }  
         HttpPost httpPost = new HttpPost(postUrl);
+        
+        
         FileBody fileBody = new FileBody(new File(filePath));
         MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
         multipartEntityBuilder.addPart("file",fileBody);
-
+               
+        httpPost.setHeader("Cookie",cookie);
+        httpPost.addHeader("Content-Type", "multipart/form-data;boundary=----WebKitFormBoundaryatUU82mkyZInxB5k");
         HttpEntity reqEntity  = multipartEntityBuilder.build();
         httpPost.setEntity(reqEntity);
         try {
             CloseableHttpResponse response =  closeableHttpClient.execute(httpPost);
+            
             System.out.println("上传之后返回的状态码:"+response.getStatusLine().getStatusCode());
+            System.out.println("response:"+response.toString());
             try {
                 HttpEntity resEntity = response.getEntity();              
               
@@ -314,7 +321,7 @@ public class HttpRequestUtils {
                 while ((r = is.read(buffer)) > 0) {
                     strBuf.append(new String(buffer, 0, r, "UTF-8"));
                 }
-                System.out.println("resp=" + respStr);               
+                System.out.println("resp=" + strBuf);               
                 
                 EntityUtils.consume(reqEntity);
                 
