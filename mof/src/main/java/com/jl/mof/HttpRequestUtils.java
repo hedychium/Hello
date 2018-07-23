@@ -75,10 +75,11 @@ public class HttpRequestUtils {
 	/**
 	 * @Description:使用HttpClient发送post请求
 	 */
-	public static String httpClientPost(String urlParam, Map<String, Object> params, String charset) {
+	public static String httpClientPost(String urlParam, String cookie,Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
 		HttpClient client = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(urlParam);
+		httpPost.setHeader("Cookie", cookie);
 		// 构建请求参数
 		List<NameValuePair> list = new ArrayList<NameValuePair>();
 		Iterator<Entry<String, Object>> iterator = params.entrySet().iterator();
@@ -118,7 +119,7 @@ public class HttpRequestUtils {
 	/**
 	 * @Description:使用HttpClient发送get请求
 	 */
-	public static String httpClientGet(String urlParam, Map<String, Object> params, String charset) {
+	public static String httpClientGet(String urlParam, String cookie,Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
 		HttpClient client = new DefaultHttpClient();
 		BufferedReader br = null;
@@ -140,6 +141,7 @@ public class HttpRequestUtils {
 			urlParam = urlParam + "?" + sbParams.substring(0, sbParams.length() - 1);
 		}
 		HttpGet httpGet = new HttpGet(urlParam);
+		httpGet.setHeader("Cookie", cookie);
 		try {
 			HttpResponse response = client.execute(httpGet);
 			// 读取服务器响应数据
@@ -166,113 +168,7 @@ public class HttpRequestUtils {
 		return resultBuffer.toString();
 	}
 
-	/**
-	 * 发送http请求，附带文件
-	 * 
-	 * @param urlParam
-	 * @param filepath
-	 * @return
-	 */
-	public static String sendPostWithFile(String url, Cookie[] cookies, String filepath) {
-		DataOutputStream out = null;
-		BufferedReader in = null;
-		String result = null;
-		HttpURLConnection conn = null;
-		StringBuffer tmpcookies = new StringBuffer();
-		for (Cookie c : cookies) {
-			tmpcookies.append(c.toString() + ";");
-			System.out.println("cookies = " + c.toString());
-		}
-		try {
-			URL realUrl = new URL(url);
-			// 打开和url之间的连接
-			conn = (HttpURLConnection) realUrl.openConnection();
-
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			// 定义数据分割线
-			String BOUNDARY = "----WebKitFormBoundaryatUU82mkyZInxB5k";
-
-			conn.setConnectTimeout(5000);
-			conn.setReadTimeout(30000);
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			conn.setUseCaches(false);
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Connection", "Keep-Alive");
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
-			conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-			conn.connect();
-			out = new DataOutputStream(conn.getOutputStream());
-
-			File file = new File(filepath);
-
-			// 上传文件
-			StringBuilder sb = new StringBuilder();
-			sb.append("--");
-			sb.append(BOUNDARY);
-			sb.append("\r\n");
-			// 文件参数,photo参数名可以随意修改
-			sb.append("Content-Disposition: form-data;name=\"uploadFile\";filename=\"" + file.getName() + "\"\r\n");
-			System.out.println(file.getName());
-			sb.append("Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			// 参数头设置完以后需要两个换行，然后才是参数内容
-			sb.append("\r\n");
-			sb.append("\r\n");
-
-			// 将参数头的数据写入到输出流中
-			out.write(sb.toString().getBytes());
-
-			// 数据输入流,用于读取文件数据
-			DataInputStream inputStream = new DataInputStream(new FileInputStream(file));
-			byte[] bufferOut = new byte[1024 * 8];
-			int bytes = 0;
-			// 每次读8KB数据,并且将文件数据写入到输出流中
-			while ((bytes = inputStream.read(bufferOut)) != -1) {
-				out.write(bufferOut, 0, bytes);
-			}
-			// 最后添加换行
-			out.write("\r\n".getBytes());
-			inputStream.close();
-
-			// 定义最后数据分隔线，即--加上BOUNDARY再加上--。
-			byte[] end_data = ("\r\n" + "--" + BOUNDARY + "--" + "\r\n").getBytes();
-			// 写上结尾标识
-			out.write(end_data);
-			System.out.println(out.toString());
-			out.flush();
-			out.close();
-
-			// 定义BufferedReader输入流来读取URL的响应
-
-			int code = conn.getResponseCode();
-			InputStream is;
-			if (code == 200) {
-				is = conn.getInputStream(); // 得到网络返回的输入流
-			} else {
-				is = conn.getErrorStream(); // 得到网络返回的输入流
-			}
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				result += line; // 这里读取的是上边url对应的上传文件接口的返回值，读取出来后，然后接着返回到前端，实现接口中调用接口的方式
-			}
-			System.out.println(result);
-			reader.close();
-			reader = null;
-		} catch (Exception e) {
-			System.out.println("发送POST请求出现异常！" + e);
-			e.printStackTrace();
-		} finally {
-			if (conn != null) {
-				conn.disconnect();
-				conn = null;
-			}
-		}
-		return result;
-	}
+	
 
 	public static String sendWithFile2(CookieStore cookieStore, String cookie, String postUrl, String filePath,Map<String,ContentBody> reqParam) {
 		String respStr = "";
@@ -285,6 +181,7 @@ public class HttpRequestUtils {
 		} else {
 			closeableHttpClient = httpClientBuilder.build();
 		}
+
 		HttpPost httpPost = new HttpPost(postUrl);
 		File file=new File(filePath);
 		FileBody fileBody = new FileBody(file);

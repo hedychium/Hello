@@ -112,7 +112,7 @@ public class LoginWithHttpclient {
 	 * @param map
 	 * @return
 	 */
-	public static HttpResponse doPost2(String postUrl,String uploadUrl, Map<String, Object> map, String filePath,String charset) {
+	public static HttpResponse doPost2(String postUrl, Map<String, Object> map, String charset) {
 		String retStr = "";
 		// 创建HttpClientBuilder
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -207,16 +207,17 @@ public class LoginWithHttpclient {
 		Map<String, Object> params = new HashedMap();
 		params.put("password", "123456");
 		params.put("username", "bdtz@report.com.cn");
-		HttpClient httpClient = HttpClients.createDefault();
+//		params.put("username", "admin@datayes.com");
+
 		// 第一次登录会保存cookie
-		HttpResponse response = doPost2(loginUrl,uploadUrl, params, filePath,"utf-8");
+		HttpResponse response = doPost2(loginUrl, params,"utf-8");
 		String cookie = response.getFirstHeader("Set-Cookie").getValue();
-		System.out.println(cookie);
+		System.out.println("cookie:   "+cookie);
 		
 		 Map<String,ContentBody> reqParam = new HashMap<String,ContentBody>();
 		 reqParam.put("uploadFile", new StringBody(filePath, ContentType.MULTIPART_FORM_DATA));
 		   
-		String re = HttpRequestUtils.sendWithFile2(cookieStore, cookie, uploadUrl, filePath,reqParam);
+		String re = HttpRequestUtils.sendWithFile2(null, cookie, uploadUrl, filePath,reqParam);
 		System.out.println(re);
 
 	}
