@@ -3,11 +3,14 @@ package com.jl.robo;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -19,7 +22,7 @@ import org.apache.http.util.EntityUtils;
 
 public class checkReport {
 
-	public static HttpResponse login(String postUrl, List<BasicNameValuePair> nvps,
+	public static HttpResponse login(String postUrl, Map<String,Object> p,
 			String charset) {
 		String retStr = "";
 		// ´´½¨HttpClientBuilder
@@ -32,6 +35,12 @@ public class checkReport {
 		HttpResponse response = null;
 		
 		try {
+			List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+			Iterator<Entry<String, Object>> iterator = p.entrySet().iterator();
+			while (iterator.hasNext()) {
+				Entry<String, Object> elem = iterator.next();
+				nvps.add(new BasicNameValuePair(elem.getKey(), String.valueOf(elem.getValue())));
+			}
 			httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.UTF_8));
             httpPost.setHeader("Content-type", "application/x-www-form-urlencoded"); 
             response = client.execute(httpPost);
@@ -65,15 +74,15 @@ public class checkReport {
 		String domain = "app.datayes-stg.com";
 		String loginUrl = httpType + "/server/usermaster/authenticate/v1.json";
 
-		List<BasicNameValuePair> params = new ArrayList<BasicNameValuePair>();
-		params.add(new BasicNameValuePair("username", "test096@datayes.com"));
-		params.add(new BasicNameValuePair("password", "datayes@123"));
-		params.add(new BasicNameValuePair("rememberMe", "false"));
-		params.add(new BasicNameValuePair("app", "cloud"));
+		Map<String,Object> p=new HashMap();
+		p.put("username", "test096@datayes.com");
+		p.put("password", "datayes@123");	
+		p.put("rememberMe", "false");	
+		p.put("app", "cloud");		
 		
 		HttpResponse reponse = login(
 				"https://app.datayes-stg.com/server/usermaster/authenticate/v1.json",
-				params, "UTF-8");
+				p, "UTF-8");
 		String cookie=reponse.getFirstHeader("Set-Cookie").getValue();
 		 
 		Map<String,Object> searchParams=new HashMap();
