@@ -170,7 +170,7 @@ public class HttpRequestUtils {
 
 	
 
-	public static String sendWithFile2(CookieStore cookieStore, String cookie, String postUrl, String filePath,Map<String,ContentBody> reqParam) {
+	public static String sendWithFile2(CookieStore cookieStore, String cookie, String postUrl, Map<String,ContentBody> reqParam) {
 		String respStr = "";
 		// ´´½¨HttpClientBuilder
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
@@ -183,11 +183,16 @@ public class HttpRequestUtils {
 		}
 
 		HttpPost httpPost = new HttpPost(postUrl);
-		File file=new File(filePath);
-		FileBody fileBody = new FileBody(file);
+
 		MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
+		Iterator<Map.Entry<String, ContentBody>> entries = reqParam.entrySet().iterator(); 
+		while(entries.hasNext()){
+			Map.Entry<String, ContentBody> entry = entries.next();
+			multipartEntityBuilder.addPart(entry.getKey(), entry.getValue());
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
+		}
 		
-		multipartEntityBuilder.addPart("uploadFile",fileBody);
+//		multipartEntityBuilder.addPart("uploadFile",fileBody);
 //		multipartEntityBuilder.addPart("file", fileBody);
 
 		httpPost.setHeader("Cookie", cookie);

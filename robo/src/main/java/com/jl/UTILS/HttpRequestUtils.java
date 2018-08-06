@@ -1,4 +1,4 @@
-package com.jl.robo;
+package com.jl.UTILS;
 
 import java.io.*;
 import java.net.*;
@@ -30,8 +30,8 @@ import org.apache.http.util.EntityUtils;
 
 public class HttpRequestUtils {
 	/**
-	 * @Description:Ê¹ÓÃHttpClient·¢ËÍpostÇëÇó"Content-Type", "application/json;charset=utf-8"
-	 *                                                  ÇëÇó²ÎÊıÒªÇójson¸ñÊ½
+	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½"Content-Type", "application/json;charset=utf-8"
+	 *                                                  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½jsonï¿½ï¿½Ê½
 	 */
 	public static String httpClientPost2(String urlParam, Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
@@ -39,7 +39,7 @@ public class HttpRequestUtils {
 		HttpPost httpPost = new HttpPost(urlParam);
 		httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
 
-		// ÉèÖÃÇëÇóµÄ²ÎÊı
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
 		JSONObject jsonParam = JSONObject.fromObject(params);
 
 		BufferedReader br = null;
@@ -50,7 +50,7 @@ public class HttpRequestUtils {
 			entity.setContentType("application/json");
 			httpPost.setEntity(entity);
 			HttpResponse response = client.execute(httpPost);
-			// ¶ÁÈ¡·şÎñÆ÷ÏìÓ¦Êı¾İ
+			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 			resultBuffer = new StringBuffer();
 			br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			String temp;
@@ -73,14 +73,14 @@ public class HttpRequestUtils {
 	}
 
 	/**
-	 * @Description:Ê¹ÓÃHttpClient·¢ËÍpostÇëÇó
+	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½
 	 */
 	public static String httpClientPost(String urlParam, String cookie,Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
 		HttpClient client = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(urlParam);
 		httpPost.addHeader("Cookie", cookie);
-		// ¹¹½¨ÇëÇó²ÎÊı
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		List<NameValuePair> list = new ArrayList<NameValuePair>();
 		Iterator<Entry<String, Object>> iterator = params.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -94,7 +94,7 @@ public class HttpRequestUtils {
 				httpPost.setEntity(entity);
 			}
 			HttpResponse response = client.execute(httpPost);
-			// ¶ÁÈ¡·şÎñÆ÷ÏìÓ¦Êı¾İ
+			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 			resultBuffer = new StringBuffer();
 			br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			String temp;
@@ -117,13 +117,13 @@ public class HttpRequestUtils {
 	}
 
 	/**
-	 * @Description:Ê¹ÓÃHttpClient·¢ËÍgetÇëÇó
+	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½getï¿½ï¿½ï¿½ï¿½
 	 */
 	public static String httpClientGet(String urlParam,String cookie, Map<String, Object> params, String charset) {
 		String res  = null;
 		HttpClient client = new DefaultHttpClient();
 		BufferedReader br = null;
-		// ¹¹½¨ÇëÇó²ÎÊı
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		StringBuffer sbParams = new StringBuffer();
 		if (params != null && params.size() > 0) {
 			for (Entry<String, Object> entry : params.entrySet()) {
@@ -144,10 +144,10 @@ public class HttpRequestUtils {
 		httpGet.setHeader("Cookie", cookie);
 		try {
 			HttpResponse response = client.execute(httpGet);
-			// ¶ÁÈ¡·şÎñÆ÷ÏìÓ¦Êı¾İ
+			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
 			res = EntityUtils.toString(response.getEntity(), charset);
 			
-			System.out.println("·µ»ØµÄ×´Ì¬Âë:" + response.getStatusLine().getStatusCode());
+			System.out.println("ï¿½ï¿½ï¿½Øµï¿½×´Ì¬ï¿½ï¿½:" + response.getStatusLine().getStatusCode());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -164,117 +164,10 @@ public class HttpRequestUtils {
 		return res;
 	}
 
-	/**
-	 * ·¢ËÍhttpÇëÇó£¬¸½´øÎÄ¼ş
-	 * 
-	 * @param urlParam
-	 * @param filepath
-	 * @return
-	 */
-	public static String sendPostWithFile(String url, Cookie[] cookies, String filepath) {
-		DataOutputStream out = null;
-		BufferedReader in = null;
-		String result = null;
-		HttpURLConnection conn = null;
-		StringBuffer tmpcookies = new StringBuffer();
-		for (Cookie c : cookies) {
-			tmpcookies.append(c.toString() + ";");
-			System.out.println("cookies = " + c.toString());
-		}
-		try {
-			URL realUrl = new URL(url);
-			// ´ò¿ªºÍurlÖ®¼äµÄÁ¬½Ó
-			conn = (HttpURLConnection) realUrl.openConnection();
-
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			// ¶¨ÒåÊı¾İ·Ö¸îÏß
-			String BOUNDARY = "----WebKitFormBoundaryatUU82mkyZInxB5k";
-
-			conn.setConnectTimeout(5000);
-			conn.setReadTimeout(30000);
-			conn.setDoOutput(true);
-			conn.setDoInput(true);
-			conn.setUseCaches(false);
-			conn.setRequestMethod("POST");
-			conn.setRequestProperty("Connection", "Keep-Alive");
-			conn.setRequestProperty("User-Agent",
-					"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36");
-			conn.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + BOUNDARY);
-			conn.connect();
-			out = new DataOutputStream(conn.getOutputStream());
-
-			File file = new File(filepath);
-
-			// ÉÏ´«ÎÄ¼ş
-			StringBuilder sb = new StringBuilder();
-			sb.append("--");
-			sb.append(BOUNDARY);
-			sb.append("\r\n");
-			// ÎÄ¼ş²ÎÊı,photo²ÎÊıÃû¿ÉÒÔËæÒâĞŞ¸Ä
-			sb.append("Content-Disposition: form-data;name=\"uploadFile\";filename=\"" + file.getName() + "\"\r\n");
-			System.out.println(file.getName());
-			sb.append("Content-Type:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-			// ²ÎÊıÍ·ÉèÖÃÍêÒÔºóĞèÒªÁ½¸ö»»ĞĞ£¬È»ºó²ÅÊÇ²ÎÊıÄÚÈİ
-			sb.append("\r\n");
-			sb.append("\r\n");
-
-			// ½«²ÎÊıÍ·µÄÊı¾İĞ´Èëµ½Êä³öÁ÷ÖĞ
-			out.write(sb.toString().getBytes());
-
-			// Êı¾İÊäÈëÁ÷,ÓÃÓÚ¶ÁÈ¡ÎÄ¼şÊı¾İ
-			DataInputStream inputStream = new DataInputStream(new FileInputStream(file));
-			byte[] bufferOut = new byte[1024 * 8];
-			int bytes = 0;
-			// Ã¿´Î¶Á8KBÊı¾İ,²¢ÇÒ½«ÎÄ¼şÊı¾İĞ´Èëµ½Êä³öÁ÷ÖĞ
-			while ((bytes = inputStream.read(bufferOut)) != -1) {
-				out.write(bufferOut, 0, bytes);
-			}
-			// ×îºóÌí¼Ó»»ĞĞ
-			out.write("\r\n".getBytes());
-			inputStream.close();
-
-			// ¶¨Òå×îºóÊı¾İ·Ö¸ôÏß£¬¼´--¼ÓÉÏBOUNDARYÔÙ¼ÓÉÏ--¡£
-			byte[] end_data = ("\r\n" + "--" + BOUNDARY + "--" + "\r\n").getBytes();
-			// Ğ´ÉÏ½áÎ²±êÊ¶
-			out.write(end_data);
-			System.out.println(out.toString());
-			out.flush();
-			out.close();
-
-			// ¶¨ÒåBufferedReaderÊäÈëÁ÷À´¶ÁÈ¡URLµÄÏìÓ¦
-
-			int code = conn.getResponseCode();
-			InputStream is;
-			if (code == 200) {
-				is = conn.getInputStream(); // µÃµ½ÍøÂç·µ»ØµÄÊäÈëÁ÷
-			} else {
-				is = conn.getErrorStream(); // µÃµ½ÍøÂç·µ»ØµÄÊäÈëÁ÷
-			}
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-			String line = null;
-			while ((line = reader.readLine()) != null) {
-				result += line; // ÕâÀï¶ÁÈ¡µÄÊÇÉÏ±ßurl¶ÔÓ¦µÄÉÏ´«ÎÄ¼ş½Ó¿ÚµÄ·µ»ØÖµ£¬¶ÁÈ¡³öÀ´ºó£¬È»ºó½Ó×Å·µ»Øµ½Ç°¶Ë£¬ÊµÏÖ½Ó¿ÚÖĞµ÷ÓÃ½Ó¿ÚµÄ·½Ê½
-			}
-			System.out.println(result);
-			reader.close();
-			reader = null;
-		} catch (Exception e) {
-			System.out.println("·¢ËÍPOSTÇëÇó³öÏÖÒì³££¡" + e);
-			e.printStackTrace();
-		} finally {
-			if (conn != null) {
-				conn.disconnect();
-				conn = null;
-			}
-		}
-		return result;
-	}
-
+	
 	public static String sendWithFile2(CookieStore cookieStore, String cookie, String postUrl, String filePath,Map<String,ContentBody> reqParam) {
 		String respStr = "";
-		// ´´½¨HttpClientBuilder
+		// ï¿½ï¿½ï¿½ï¿½HttpClientBuilder
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		// HttpClient
 		CloseableHttpClient closeableHttpClient = null;
@@ -297,7 +190,7 @@ public class HttpRequestUtils {
 		try {
 			CloseableHttpResponse response = closeableHttpClient.execute(httpPost);
 
-			System.out.println("ÉÏ´«Ö®ºó·µ»ØµÄ×´Ì¬Âë:" + response.getStatusLine().getStatusCode());
+			System.out.println("ï¿½Ï´ï¿½Ö®ï¿½ó·µ»Øµï¿½×´Ì¬ï¿½ï¿½:" + response.getStatusLine().getStatusCode());
 			System.out.println("response:" + response.toString());
 			try {
 				HttpEntity resEntity = response.getEntity();

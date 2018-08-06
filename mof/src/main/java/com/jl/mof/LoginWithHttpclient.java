@@ -215,9 +215,10 @@ public class LoginWithHttpclient {
 		System.out.println("cookie:   "+cookie);
 		
 		 Map<String,ContentBody> reqParam = new HashMap<String,ContentBody>();
-		 reqParam.put("uploadFile", new StringBody(filePath, ContentType.MULTIPART_FORM_DATA));
+		 reqParam.put("uploadFile", new FileBody(new File(filePath), ContentType.MULTIPART_FORM_DATA));
+//		 reqParam.put("uploadFile", new StringBody(filePath, ContentType.MULTIPART_FORM_DATA));
 		   
-		String re = HttpRequestUtils.sendWithFile2(null, cookie, uploadUrl, filePath,reqParam);
+		String re = HttpRequestUtils.sendWithFile2(null, cookie, uploadUrl,reqParam);
 		System.out.println(re);
 
 	}
