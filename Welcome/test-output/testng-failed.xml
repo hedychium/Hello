@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite guice-stage="DEVELOPMENT" name="Failed suite [Suite]">
+  <test name="final(failed)">
+    <classes>
+      <class name="NewTest.TestGroup">
+        <methods>
+          <include name="runSelenium"/>
+          <include name="testConnectMsSQL"/>
+          <include name="runSelenium1"/>
+          <include name="testConnectOracle"/>
+          <include name="runFinal"/>
+          <include name="setupDB"/>
+          <include name="cleanDB"/>
+        </methods>
+      </class> <!-- NewTest.TestGroup -->
+      <class name="NewTest.Hello">
+        <methods>
+          <include name="main"/>
+          <include name="runHelloWorld"/>
+        </methods>
+      </class> <!-- NewTest.Hello -->
+    </classes>
+  </test> <!-- final(failed) -->
+  <test name="selenium(failed)">
+    <groups>
+      <run>
+        <include name="selenium-test"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="NewTest.TestGroup">
+        <methods>
+          <include name="setupDB"/>
+          <include name="cleanDB"/>
+        </methods>
+      </class> <!-- NewTest.TestGroup -->
+      <class name="NewTest.Hello">
+        <methods>
+          <include name="main"/>
+        </methods>
+      </class> <!-- NewTest.Hello -->
+    </classes>
+  </test> <!-- selenium(failed) -->
+</suite> <!-- Failed suite [Suite] -->

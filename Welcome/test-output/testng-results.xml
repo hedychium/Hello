@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="5" passed="5">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Suite" duration-ms="42" started-at="2018-08-28T09:34:16Z" finished-at="2018-08-28T09:34:16Z">
+    <groups>
+      <group name="database">
+        <method signature="TestGroup.testConnectMsSQL()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="testConnectMsSQL" class="NewTest.TestGroup"/>
+        <method signature="TestGroup.testConnectOracle()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="testConnectOracle" class="NewTest.TestGroup"/>
+      </group> <!-- database -->
+      <group name="selenium-test">
+        <method signature="TestGroup.runSelenium()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="runSelenium" class="NewTest.TestGroup"/>
+        <method signature="TestGroup.runSelenium1()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="runSelenium1" class="NewTest.TestGroup"/>
+      </group> <!-- selenium-test -->
+      <group name="mysql">
+        <method signature="TestGroup.testConnectMsSQL()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="testConnectMsSQL" class="NewTest.TestGroup"/>
+      </group> <!-- mysql -->
+    </groups>
+    <test name="db" duration-ms="42" started-at="2018-08-28T09:34:16Z" finished-at="2018-08-28T09:34:16Z">
+      <class name="NewTest.TestGroup">
+        <test-method status="PASS" signature="runSelenium()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="runSelenium" duration-ms="5" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runSelenium -->
+        <test-method status="PASS" signature="runSelenium1()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="runSelenium1" duration-ms="1" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runSelenium1 -->
+        <test-method status="PASS" signature="setupDB()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="setupDB" is-config="true" duration-ms="0" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setupDB -->
+        <test-method status="PASS" signature="testConnectMsSQL()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="testConnectMsSQL" duration-ms="5" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testConnectMsSQL -->
+        <test-method status="PASS" signature="testConnectOracle()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="testConnectOracle" duration-ms="2" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testConnectOracle -->
+        <test-method status="PASS" signature="cleanDB()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="cleanDB" is-config="true" duration-ms="1" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- cleanDB -->
+        <test-method status="PASS" signature="runFinal()[pri:0, instance:NewTest.TestGroup@643b1d11]" name="runFinal" duration-ms="1" depends-on-groups="database, selenium-test" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runFinal -->
+      </class> <!-- NewTest.TestGroup -->
+      <class name="NewTest.TestConfig">
+        <test-method status="PASS" signature="testBeforeSuite()[pri:0, instance:NewTest.TestConfig@100fc185]" name="testBeforeSuite" is-config="true" duration-ms="10" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testBeforeSuite -->
+        <test-method status="PASS" signature="testBeforeTest()[pri:0, instance:NewTest.TestConfig@100fc185]" name="testBeforeTest" is-config="true" duration-ms="0" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testBeforeTest -->
+        <test-method status="PASS" signature="testAfterTest()[pri:0, instance:NewTest.TestConfig@100fc185]" name="testAfterTest" is-config="true" duration-ms="0" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAfterTest -->
+        <test-method status="PASS" signature="testAfterSuite()[pri:0, instance:NewTest.TestConfig@100fc185]" name="testAfterSuite" is-config="true" duration-ms="0" started-at="2018-08-28T17:34:16Z" finished-at="2018-08-28T17:34:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testAfterSuite -->
+      </class> <!-- NewTest.TestConfig -->
+    </test> <!-- db -->
+  </suite> <!-- Suite -->
+</testng-results>

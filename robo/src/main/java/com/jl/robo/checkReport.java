@@ -37,9 +37,6 @@ public class checkReport {
 		// ´´½¨HttpClientBuilder
 		CloseableHttpClient client = HttpClients.createDefault();
 		HttpPost httpPost = new HttpPost(postUrl);
-
-		httpPost.setHeader("Content-Type",
-				"application/x-www-form-urlencoded;charset=utf-8");		
 		
 		HttpResponse response = null;
 		

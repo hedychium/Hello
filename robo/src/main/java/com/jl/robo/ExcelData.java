@@ -1,4 +1,4 @@
-package com.jl.robo;
+ï»¿package com.jl.robo;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +23,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * ½âÎöexcel ÉÏ´«Êı¾İ
+ * è§£æexcel ä¸Šä¼ æ•°æ®
  * @author Administrator
  *
  */
@@ -33,34 +33,34 @@ public class ExcelData {
     
     public static List<String[]> getExcelData(File file) throws IOException{
         checkFile(file);
-         //»ñµÃWorkbook¹¤×÷±¡¶ÔÏó
+         //è·å¾—Workbookå·¥ä½œè–„å¯¹è±¡
         Workbook workbook = getWorkBook(file);
-        //´´½¨·µ»Ø¶ÔÏó£¬°ÑÃ¿ĞĞÖĞµÄÖµ×÷ÎªÒ»¸öÊı×é£¬ËùÓĞĞĞ×÷ÎªÒ»¸ö¼¯ºÏ·µ»Ø
+        //åˆ›å»ºè¿”å›å¯¹è±¡ï¼ŒæŠŠæ¯è¡Œä¸­çš„å€¼ä½œä¸ºä¸€ä¸ªæ•°ç»„ï¼Œæ‰€æœ‰è¡Œä½œä¸ºä¸€ä¸ªé›†åˆè¿”å›
         List<String[]> list = new ArrayList<String[]>();
         if(workbook != null){
             for(int sheetNum = 0;sheetNum < workbook.getNumberOfSheets();sheetNum++){
-                //»ñµÃµ±Ç°sheet¹¤×÷±í
+                //è·å¾—å½“å‰sheetå·¥ä½œè¡¨
                 Sheet sheet = workbook.getSheetAt(sheetNum);
                 if(sheet == null){
                     continue; 
                 }
-                //»ñµÃµ±Ç°sheetµÄ¿ªÊ¼ĞĞ
+                //è·å¾—å½“å‰sheetçš„å¼€å§‹è¡Œ
                 int firstRowNum  = sheet.getFirstRowNum();
-                //»ñµÃµ±Ç°sheetµÄ½áÊøĞĞ
+                //è·å¾—å½“å‰sheetçš„ç»“æŸè¡Œ
                 int lastRowNum = sheet.getLastRowNum();
-                //Ñ­»·³ıÁËµÚÒ»ĞĞµÄËùÓĞĞĞ
+                //å¾ªç¯é™¤äº†ç¬¬ä¸€è¡Œçš„æ‰€æœ‰è¡Œ
                 for(int rowNum = firstRowNum+1;rowNum <= lastRowNum;rowNum++){
-                    //»ñµÃµ±Ç°ĞĞ
+                    //è·å¾—å½“å‰è¡Œ
                     Row row = sheet.getRow(rowNum);
                     if(row == null){
                         continue;
                     }
-                    //»ñµÃµ±Ç°ĞĞµÄ¿ªÊ¼ÁĞ
+                    //è·å¾—å½“å‰è¡Œçš„å¼€å§‹åˆ—
                     int firstCellNum = row.getFirstCellNum();
-                    //»ñµÃµ±Ç°ĞĞµÄÁĞÊı
+                    //è·å¾—å½“å‰è¡Œçš„åˆ—æ•°
                     int lastCellNum = row.getLastCellNum();
                     String[] cells = new String[row.getLastCellNum()];
-                    //Ñ­»·µ±Ç°ĞĞ
+                    //å¾ªç¯å½“å‰è¡Œ
                     for(int cellNum = firstCellNum; cellNum < lastCellNum;cellNum++){
                         Cell cell = row.getCell(cellNum);
                         cells[cellNum] = getCellValue(cell);
@@ -73,36 +73,36 @@ public class ExcelData {
     }
     
     /**
-     * ¼ì²éÎÄ¼ş
+     * æ£€æŸ¥æ–‡ä»¶
      * @param file
      * @throws IOException
      */
      public static  void checkFile(File file) throws IOException{
-         //ÅĞ¶ÏÎÄ¼şÊÇ·ñ´æÔÚ
+         //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨
          if(null == file){
-             log.error("ÎÄ¼ş²»´æÔÚ£¡");
+             log.error("æ–‡ä»¶ä¸å­˜åœ¨ï¼");
          }
-         //»ñµÃÎÄ¼şÃû
+         //è·å¾—æ–‡ä»¶å
          String fileName = file.getName();
-         //ÅĞ¶ÏÎÄ¼şÊÇ·ñÊÇexcelÎÄ¼ş
+         //åˆ¤æ–­æ–‡ä»¶æ˜¯å¦æ˜¯excelæ–‡ä»¶
          if(!fileName.endsWith("xls") && !fileName.endsWith("xlsx")){
-             log.error(fileName + "²»ÊÇexcelÎÄ¼ş");
+             log.error(fileName + "ä¸æ˜¯excelæ–‡ä»¶");
          }
      }
      public static  Workbook getWorkBook(File file) {
-         //»ñµÃÎÄ¼şÃû
+         //è·å¾—æ–‡ä»¶å
          String fileName = file.getName();
-         //´´½¨Workbook¹¤×÷±¡¶ÔÏó£¬±íÊ¾Õû¸öexcel
+         //åˆ›å»ºWorkbookå·¥ä½œè–„å¯¹è±¡ï¼Œè¡¨ç¤ºæ•´ä¸ªexcel
          Workbook workbook = null;
          try {
-             //»ñÈ¡excelÎÄ¼şµÄioÁ÷
+             //è·å–excelæ–‡ä»¶çš„ioæµ
              InputStream is =new FileInputStream(file);
-             //¸ù¾İÎÄ¼şºó×ºÃû²»Í¬(xlsºÍxlsx)»ñµÃ²»Í¬µÄWorkbookÊµÏÖÀà¶ÔÏó
+             //æ ¹æ®æ–‡ä»¶åç¼€åä¸åŒ(xlså’Œxlsx)è·å¾—ä¸åŒçš„Workbookå®ç°ç±»å¯¹è±¡
              if(fileName.endsWith("xls")){
                  //2003
                  workbook = new HSSFWorkbook(is);
              }else if(fileName.endsWith("xlsx")){
-                 //2007 ¼°2007ÒÔÉÏ
+                 //2007 åŠ2007ä»¥ä¸Š
                  workbook = new XSSFWorkbook(is);
              }
          } catch (IOException e) {
@@ -117,51 +117,51 @@ public class ExcelData {
          if(cell == null){
              return cellValue;
          }
-     //ÅĞ¶ÏÊı¾İµÄÀàĞÍ
+     //åˆ¤æ–­æ•°æ®çš„ç±»å‹
          switch (cell.getCellType()){
-             case Cell.CELL_TYPE_NUMERIC: //Êı×Ö
+             case Cell.CELL_TYPE_NUMERIC: //æ•°å­—
                  cellValue = stringDateProcess(cell);
                  break;
-             case Cell.CELL_TYPE_STRING: //×Ö·û´®
+             case Cell.CELL_TYPE_STRING: //å­—ç¬¦ä¸²
                  cellValue = String.valueOf(cell.getStringCellValue());
                  break;
              case Cell.CELL_TYPE_BOOLEAN: //Boolean
                  cellValue = String.valueOf(cell.getBooleanCellValue());
                  break;
-             case Cell.CELL_TYPE_FORMULA: //¹«Ê½
+             case Cell.CELL_TYPE_FORMULA: //å…¬å¼
                  cellValue = String.valueOf(cell.getCellFormula());
                  break;
-             case Cell.CELL_TYPE_BLANK: //¿ÕÖµ
+             case Cell.CELL_TYPE_BLANK: //ç©ºå€¼
                  cellValue = "";
                  break;
-             case Cell.CELL_TYPE_ERROR: //¹ÊÕÏ
-                 cellValue = "·Ç·¨×Ö·û";
+             case Cell.CELL_TYPE_ERROR: //æ•…éšœ
+                 cellValue = "éæ³•å­—ç¬¦";
                  break;
              default:
-                 cellValue = "Î´ÖªÀàĞÍ";
+                 cellValue = "æœªçŸ¥ç±»å‹";
                  break;
          }
          return cellValue;
      }
      /**
-      * Ê±¼ä¸ñÊ½´¦Àí
+      * æ—¶é—´æ ¼å¼å¤„ç†
       * @return
       * @author Liu Xin Nan
-      * @data 2017Äê11ÔÂ27ÈÕ
+      * @data 2017å¹´11æœˆ27æ—¥
       */
      public static String stringDateProcess(Cell cell){
          String result = new String();  
-         if (HSSFDateUtil.isCellDateFormatted(cell)) {// ´¦ÀíÈÕÆÚ¸ñÊ½¡¢Ê±¼ä¸ñÊ½  
+         if (HSSFDateUtil.isCellDateFormatted(cell)) {// å¤„ç†æ—¥æœŸæ ¼å¼ã€æ—¶é—´æ ¼å¼  
              SimpleDateFormat sdf = null;  
              if (cell.getCellStyle().getDataFormat() == HSSFDataFormat.getBuiltinFormat("h:mm")) {  
                  sdf = new SimpleDateFormat("HH:mm");  
-             } else {// ÈÕÆÚ  
+             } else {// æ—¥æœŸ  
                  sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
              }  
              Date date = cell.getDateCellValue();  
              result = sdf.format(date);  
          } else if (cell.getCellStyle().getDataFormat() == 58) {  
-             // ´¦Àí×Ô¶¨ÒåÈÕÆÚ¸ñÊ½£ºmÔÂdÈÕ(Í¨¹ıÅĞ¶Ïµ¥Ôª¸ñµÄ¸ñÊ½id½â¾ö£¬idµÄÖµÊÇ58)  
+             // å¤„ç†è‡ªå®šä¹‰æ—¥æœŸæ ¼å¼ï¼šmæœˆdæ—¥(é€šè¿‡åˆ¤æ–­å•å…ƒæ ¼çš„æ ¼å¼idè§£å†³ï¼Œidçš„å€¼æ˜¯58)  
              SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");  
              double value = cell.getNumericCellValue();  
              Date date = org.apache.poi.ss.usermodel.DateUtil  
@@ -172,7 +172,7 @@ public class ExcelData {
              CellStyle style = cell.getCellStyle();  
              DecimalFormat format = new DecimalFormat();  
              String temp = style.getDataFormatString();  
-             // µ¥Ôª¸ñÉèÖÃ³É³£¹æ  
+             // å•å…ƒæ ¼è®¾ç½®æˆå¸¸è§„  
              if (temp.equals("General")) {  
                  format.applyPattern("#");  
              }  

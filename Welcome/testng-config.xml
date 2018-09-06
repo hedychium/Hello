@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+	<test name="db">
+		<classes>
+			<class name="NewTest.TestGroup">
+				<methods>
+					<exclude name="runFinal">
+					</exclude>
+				</methods>
+			</class>
+			<class name="NewTest.TestConfig">
+				
+			</class>
+		</classes>
+	</test> <!-- Test -->
+
+
+	<!-- <test name="selenium"> <groups> <run> <include name="selenium-test" 
+		/> <include name="mysql" /> </run> </groups> <classes> <class name="NewTest.TestConfig" 
+		/> <class name="NewTest.Hello" /> </classes> </test> -->
+
+</suite> <!-- Suite -->
