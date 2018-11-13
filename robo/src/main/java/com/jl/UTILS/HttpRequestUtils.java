@@ -16,22 +16,18 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.*;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 public class HttpRequestUtils {
 	/**
-	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½"Content-Type", "application/json;charset=utf-8"
-	 *                                                  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½jsonï¿½ï¿½Ê½
+	 * @Description:Ê¹ÓÃHttpClient·¢ËÍpostÇëÇó"Content-Type", "application/json;charset=utf-8"
+	 *                                                  ÇëÇó²ÎÊýÒªÇójson¸ñÊ½
 	 */
 	public static String httpClientPost2(String urlParam, Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
@@ -39,7 +35,7 @@ public class HttpRequestUtils {
 		HttpPost httpPost = new HttpPost(urlParam);
 		httpPost.addHeader("Content-Type", "application/json;charset=utf-8");
 
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä²ï¿½ï¿½ï¿½
+		// ÉèÖÃÇëÇóµÄ²ÎÊý
 		JSONObject jsonParam = JSONObject.fromObject(params);
 
 		BufferedReader br = null;
@@ -50,7 +46,7 @@ public class HttpRequestUtils {
 			entity.setContentType("application/json");
 			httpPost.setEntity(entity);
 			HttpResponse response = client.execute(httpPost);
-			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+			// ¶ÁÈ¡·þÎñÆ÷ÏìÓ¦Êý¾Ý
 			resultBuffer = new StringBuffer();
 			br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			String temp;
@@ -73,14 +69,14 @@ public class HttpRequestUtils {
 	}
 
 	/**
-	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½postï¿½ï¿½ï¿½ï¿½
+	 * @Description:Ê¹ÓÃHttpClient·¢ËÍpostÇëÇó
 	 */
 	public static String httpClientPost(String urlParam, String cookie,Map<String, Object> params, String charset) {
 		StringBuffer resultBuffer = null;
 		HttpClient client = new DefaultHttpClient();
 		HttpPost httpPost = new HttpPost(urlParam);
-		httpPost.addHeader("Cookie", cookie);
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		httpPost.setHeader("Cookie", cookie);
+		// ¹¹½¨ÇëÇó²ÎÊý
 		List<NameValuePair> list = new ArrayList<NameValuePair>();
 		Iterator<Entry<String, Object>> iterator = params.entrySet().iterator();
 		while (iterator.hasNext()) {
@@ -94,7 +90,7 @@ public class HttpRequestUtils {
 				httpPost.setEntity(entity);
 			}
 			HttpResponse response = client.execute(httpPost);
-			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+			// ¶ÁÈ¡·þÎñÆ÷ÏìÓ¦Êý¾Ý
 			resultBuffer = new StringBuffer();
 			br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 			String temp;
@@ -117,13 +113,13 @@ public class HttpRequestUtils {
 	}
 
 	/**
-	 * @Description:Ê¹ï¿½ï¿½HttpClientï¿½ï¿½ï¿½ï¿½getï¿½ï¿½ï¿½ï¿½
+	 * @Description:Ê¹ÓÃHttpClient·¢ËÍgetÇëÇó
 	 */
-	public static String httpClientGet(String urlParam,String cookie, Map<String, Object> params, String charset) {
-		String res  = null;
+	public static String httpClientGet(String urlParam, String cookie,Map<String, Object> params, String charset) {
+		StringBuffer resultBuffer = null;
 		HttpClient client = new DefaultHttpClient();
 		BufferedReader br = null;
-		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ¹¹½¨ÇëÇó²ÎÊý
 		StringBuffer sbParams = new StringBuffer();
 		if (params != null && params.size() > 0) {
 			for (Entry<String, Object> entry : params.entrySet()) {
@@ -144,10 +140,14 @@ public class HttpRequestUtils {
 		httpGet.setHeader("Cookie", cookie);
 		try {
 			HttpResponse response = client.execute(httpGet);
-			// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
-			res = EntityUtils.toString(response.getEntity(), charset);
-			
-			System.out.println("ï¿½ï¿½ï¿½Øµï¿½×´Ì¬ï¿½ï¿½:" + response.getStatusLine().getStatusCode());
+			// ¶ÁÈ¡·þÎñÆ÷ÏìÓ¦Êý¾Ý
+			br = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+			String temp;
+			resultBuffer = new StringBuffer();
+			while ((temp = br.readLine()) != null) {
+				resultBuffer.append(temp);
+			}
+			System.out.println("·µ»ØµÄ×´Ì¬Âë:" + response.getStatusLine().getStatusCode());
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		} finally {
@@ -161,13 +161,14 @@ public class HttpRequestUtils {
 			}
 		}
 		
-		return res;
+		return resultBuffer.toString();
 	}
 
 	
-	public static String sendWithFile2(CookieStore cookieStore, String cookie, String postUrl, String filePath,Map<String,ContentBody> reqParam) {
+
+	public static String sendWithFile(CookieStore cookieStore, String cookie, String postUrl, Map<String,ContentBody> reqParam) {
 		String respStr = "";
-		// ï¿½ï¿½ï¿½ï¿½HttpClientBuilder
+		// ´´½¨HttpClientBuilder
 		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 		// HttpClient
 		CloseableHttpClient closeableHttpClient = null;
@@ -176,13 +177,16 @@ public class HttpRequestUtils {
 		} else {
 			closeableHttpClient = httpClientBuilder.build();
 		}
+
 		HttpPost httpPost = new HttpPost(postUrl);
-		File file=new File(filePath);
-		FileBody fileBody = new FileBody(file);
+
 		MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-		
-		multipartEntityBuilder.addPart("uploadFile",fileBody);
-//		multipartEntityBuilder.addPart("file", fileBody);
+		Iterator<Map.Entry<String, ContentBody>> entries = reqParam.entrySet().iterator(); 
+		while(entries.hasNext()){
+			Map.Entry<String, ContentBody> entry = entries.next();
+			multipartEntityBuilder.addPart(entry.getKey(), entry.getValue());
+			System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue()); 
+		}
 
 		httpPost.setHeader("Cookie", cookie);
 		HttpEntity reqEntity  = multipartEntityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE).build();
@@ -190,7 +194,7 @@ public class HttpRequestUtils {
 		try {
 			CloseableHttpResponse response = closeableHttpClient.execute(httpPost);
 
-			System.out.println("ï¿½Ï´ï¿½Ö®ï¿½ó·µ»Øµï¿½×´Ì¬ï¿½ï¿½:" + response.getStatusLine().getStatusCode());
+			System.out.println("ÉÏ´«Ö®ºó·µ»ØµÄ×´Ì¬Âë:" + response.getStatusLine().getStatusCode());
 			System.out.println("response:" + response.toString());
 			try {
 				HttpEntity resEntity = response.getEntity();
@@ -204,6 +208,7 @@ public class HttpRequestUtils {
 				while ((r = is.read(buffer)) > 0) {
 					strBuf.append(new String(buffer, 0, r, "UTF-8"));
 				}
+				respStr=strBuf.toString();
 				System.out.println("resp=" + strBuf);
 
 				EntityUtils.consume(reqEntity);

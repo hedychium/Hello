@@ -1,6 +1,15 @@
 eclipse.preferences.version=1
-encoding//src/main/java=GBK
+encoding//src/main/java=UTF-8
+encoding//src/main/java/com/jl/UTILS/HttpRequestUtils.java=GBK
+encoding//src/main/java/com/jl/UTILS/JsonSameUtil.java=UTF-8
 encoding//src/main/java/com/jl/UTILS/RandomUtils.java=UTF-8
+encoding//src/main/java/com/jl/crawl/page/Page.java=GBK
+encoding//src/main/java/com/jl/crawl/page/PageParserTool.java=GBK
+encoding//src/main/java/com/jl/crawl/page/RequestAndResponseTool.java=GBK
+encoding//src/main/java/com/jl/crawl/util/CharsetDetector.java=GBK
+encoding//src/main/java/com/jl/crawl/util/RegexRule.java=GBK
+encoding//src/main/java/com/jl/crawl/util/package-info.java=GBK
 encoding//src/main/java/com/jl/robo=GBK
+encoding//src/main/java/com/jl/robo/indexApiTest.java=UTF-8
 encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

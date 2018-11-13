@@ -59,7 +59,7 @@ public class checkDate {
 		// TODO Auto-generated method stub
 		String httpType = "https://";
 		String domain = "app.datayes-stg.com";
-		String loginUrl = httpType + "/server/usermaster/authenticate/v1.json";
+		String loginUrl = httpType +domain+ "/server/usermaster/authenticate/v1.json";
 
 		Map<String,Object> p=new HashMap();
 		p.put("username", "lijiang@datayes.com");

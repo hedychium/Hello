@@ -1,58 +1,155 @@
 package com.jl.crawl.main;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+
+import org.apache.http.client.*;
+import org.apache.http.client.CookieStore;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.impl.client.*;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 
 import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.params.HttpMethodParams;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
+
 
 import com.jl.crawl.page.Page;
+import com.jl.crawl.page.PageParserTool;
+import com.jl.robo.LoginWithHttpclient;
+import com.jl.robo.checkReport;
+
 
 public class testUrlContent {
-	 public static Page  sendRequstAndGetResponse(String url) {
+	 
+	 public static String  sendRequstAndGetResponse2(String url ) {
 	        Page page = null;
-	        // 1.Éú³É HttpClinet ¶ÔÏó²¢ÉèÖÃ²ÎÊý
+	        String cookie="";
+	        // 1.ï¿½ï¿½ï¿½ï¿½ HttpClinet ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
 	        HttpClient httpClient = new HttpClient();
-	        // ÉèÖÃ HTTP Á¬½Ó³¬Ê± 5s
+	        // ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½Ó³ï¿½Ê± 5s
 	        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
-	        // 2.Éú³É GetMethod ¶ÔÏó²¢ÉèÖÃ²ÎÊý
+	        
+	        // 2.ï¿½ï¿½ï¿½ï¿½ GetMethod ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
 	        GetMethod getMethod = new GetMethod(url);
-	        // ÉèÖÃ get ÇëÇó³¬Ê± 5s
+//	        getMethod.setRequestHeader("cookie", cookie);
+	        // ï¿½ï¿½ï¿½ï¿½ get ï¿½ï¿½ï¿½ï¿½Ê± 5s
 	        getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
-	        // ÉèÖÃÇëÇóÖØÊÔ´¦Àí
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½
 	        getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
-	        // 3.Ö´ÐÐ HTTP GET ÇëÇó
+	        // 3.Ö´ï¿½ï¿½ HTTP GET ï¿½ï¿½ï¿½ï¿½
 	        try {
 	            int statusCode = httpClient.executeMethod(getMethod);
-	        // ÅÐ¶Ï·ÃÎÊµÄ×´Ì¬Âë
+	        // ï¿½Ð¶Ï·ï¿½ï¿½Êµï¿½×´Ì¬ï¿½ï¿½
 	            if (statusCode != HttpStatus.SC_OK) {
 	                System.err.println("Method failed: " + getMethod.getStatusLine());
 	            }
-	        // 4.´¦Àí HTTP ÏìÓ¦ÄÚÈÝ
-	            byte[] responseBody = getMethod.getResponseBody();// ¶ÁÈ¡Îª×Ö½Ú Êý×é
-	            String contentType = getMethod.getResponseHeader("Content-Type").getValue(); // µÃµ½µ±Ç°·µ»ØÀàÐÍ
+	        // 4.ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+	            byte[] responseBody = getMethod.getResponseBody();// ï¿½ï¿½È¡Îªï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	            String contentType = getMethod.getResponseHeader("Content-Type").getValue(); // ï¿½Ãµï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	            System.out.println(responseBody);
-	            page = new Page(responseBody,url,contentType); //·â×°³ÉÎªÒ³Ãæ
+	            cookie=getMethod.getResponseHeader("Set-Cookie").getValue();
+//	            page = new Page(responseBody,url,contentType); //ï¿½ï¿½×°ï¿½ï¿½ÎªÒ³ï¿½ï¿½
 	        } catch (HttpException e) {
-	        // ·¢ÉúÖÂÃüµÄÒì³££¬¿ÉÄÜÊÇÐ­Òé²»¶Ô»òÕß·µ»ØµÄÄÚÈÝÓÐÎÊÌâ
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½é²»ï¿½Ô»ï¿½ï¿½ß·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	            System.out.println("Please check your provided http address!");
 	            e.printStackTrace();
 	        } catch (IOException e) {
-	        // ·¢ÉúÍøÂçÒì³£
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
 	            e.printStackTrace();
 	        } finally {
-	        // ÊÍ·ÅÁ¬½Ó
+	        // ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½
+	            getMethod.releaseConnection();
+	        }
+	        return cookie;
+	    }
+	 
+	 public static Page  sendRequstAndGetResponse(String url,String cookie ) {
+	        Page page = null;
+	        // 1.ï¿½ï¿½ï¿½ï¿½ HttpClinet ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
+	        HttpClient httpClient = new HttpClient();
+	        // ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½Ó³ï¿½Ê± 5s
+	        httpClient.getHttpConnectionManager().getParams().setConnectionTimeout(5000);
+	        
+	        // 2.ï¿½ï¿½ï¿½ï¿½ GetMethod ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã²ï¿½ï¿½ï¿½
+	        GetMethod getMethod = new GetMethod(url);
+//	        getMethod.setRequestHeader("cookie", cookie);
+	        // ï¿½ï¿½ï¿½ï¿½ get ï¿½ï¿½ï¿½ï¿½Ê± 5s
+	        getMethod.getParams().setParameter(HttpMethodParams.SO_TIMEOUT, 5000);
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´ï¿½ï¿½ï¿½
+	        getMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
+	        // 3.Ö´ï¿½ï¿½ HTTP GET ï¿½ï¿½ï¿½ï¿½
+	        try {
+	            int statusCode = httpClient.executeMethod(getMethod);
+	        // ï¿½Ð¶Ï·ï¿½ï¿½Êµï¿½×´Ì¬ï¿½ï¿½
+	            if (statusCode != HttpStatus.SC_OK) {
+	                System.err.println("Method failed: " + getMethod.getStatusLine());
+	            }
+	        // 4.ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½
+	            byte[] responseBody = getMethod.getResponseBody();// ï¿½ï¿½È¡Îªï¿½Ö½ï¿½ ï¿½ï¿½ï¿½ï¿½
+	            String contentType = getMethod.getResponseHeader("Content-Type").getValue(); // ï¿½Ãµï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	            System.out.println(responseBody);
+	            page = new Page(responseBody,url,contentType); //ï¿½ï¿½×°ï¿½ï¿½ÎªÒ³ï¿½ï¿½
+	        } catch (HttpException e) {
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð­ï¿½é²»ï¿½Ô»ï¿½ï¿½ß·ï¿½ï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	            System.out.println("Please check your provided http address!");
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì³£
+	            e.printStackTrace();
+	        } finally {
+	        // ï¿½Í·ï¿½ï¿½ï¿½ï¿½ï¿½
 	            getMethod.releaseConnection();
 	        }
 	        return page;
 	    }
+	 
+
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Page page=sendRequstAndGetResponse("http://robor.wmcloud-qa.com/v2/home");
+		String cookie = null;
+		HttpClient client = new HttpClient();
+		HttpGet httpGet = new HttpGet("http://robor.wmcloud-qa.com/v2/");
+//		HttpResponse response = client.executeMethod(httpGet);
+//		cookie = response.getFirstHeader("Set-Cookie").getValue();
+		
+		Page page=testUrlContent.sendRequstAndGetResponse("https://robo.datayes.com/v2/fastreport/search?input=%E9%94%90%E7%A7%91%E6%BF%80%E5%85%89#reportSearch",cookie);
 		System.out.println(page.getHtml());
-	}	 
-
+		System.out.println(page.getUrl());
+		Elements es = PageParserTool.select(page,"meta[name=\"viewport\"]");
+		if(!es.isEmpty()){
+            System.out.println("ï¿½ï¿½ï¿½æ½«ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½metaï¿½ï¿½Ç©ï¿½ï¿½ ");
+            System.out.println(es);
+        }
+		
+		Elements titles = PageParserTool.select(page,"title");
+		if(!es.isEmpty()){
+            System.out.println("ï¿½ï¿½ï¿½æ½«ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½titleï¿½ï¿½Ç©ï¿½ï¿½ ");
+            System.out.println(titles);
+        }
+				
+		ArrayList<String> list=PageParserTool.getAttrs(page, "meta", "name");
+		System.out.println(list);
+		
+	}
 }

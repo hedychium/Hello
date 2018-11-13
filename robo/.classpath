@@ -12,84 +12,26 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/org/apache/poi/poi/3.15/poi-3.15.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.poi"/>
-			<attribute name="maven.artifactId" value="poi"/>
-			<attribute name="maven.version" value="3.15"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/org/apache/poi/poi-ooxml/3.15/poi-ooxml-3.15.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.poi"/>
-			<attribute name="maven.artifactId" value="poi-ooxml"/>
-			<attribute name="maven.version" value="3.15"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="var" path="M2_REPO"/>
 	<classpathentry kind="lib" path="/TestAttribution/lib/json-lib-2.4-jdk15.jar" sourcepath="D:/Repositories/Maven/com/hynnet/json-lib/2.4/json-lib-2.4-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/org/apache/httpcomponents/httpmime/4.5.5/httpmime-4.5.5.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.apache.httpcomponents"/>
-			<attribute name="maven.artifactId" value="httpmime"/>
-			<attribute name="maven.version" value="4.5.5"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/com/google/code/gson/gson/2.8.5/gson-2.8.5.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="com.google.code.gson"/>
-			<attribute name="maven.artifactId" value="gson"/>
-			<attribute name="maven.version" value="2.8.5"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/net/minidev/json-smart/2.2.1/json-smart-2.2.1.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="net.minidev"/>
-			<attribute name="maven.artifactId" value="json-smart"/>
-			<attribute name="maven.version" value="2.2.1"/>
-			<attribute name="maven.scope" value="test"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="D:/workspace/Library/mysql-connector-java-5.1.39-bin.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/org/springframework/spring-web/4.3.12.RELEASE/spring-web-4.3.12.RELEASE.jar">
-		<attributes>
-			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="maven.groupId" value="org.springframework"/>
-			<attribute name="maven.artifactId" value="spring-web"/>
-			<attribute name="maven.version" value="4.3.12.RELEASE"/>
-			<attribute name="maven.scope" value="compile"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="D:/workspace/Library/json-lib-2.4-jdk15.jar"/>
 	<classpathentry kind="lib" path="D:/workspace/Library/commons-lang-2.5.jar"/>
 	<classpathentry kind="lib" path="D:/workspace/Library/commons-beanutils-1.8.0.jar"/>
 	<classpathentry kind="lib" path="D:/workspace/Library/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="D:/workspace/Library/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="D:/workspace/Library/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/li.jiang/.m2/repository/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>

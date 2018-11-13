@@ -123,7 +123,7 @@ public class checkReport {
 				"https://app.datayes-stg.com/server/usermaster/authenticate/v1.json",
 				p, "UTF-8");
 		String cookie2=reponse2.getFirstHeader("Set-Cookie").getValue();
-		 
+		System.out.println(cookie2);
 		Map<String,Object> searchParams2=new HashMap();
 		searchParams2.put("type", "EXTERNAL_REPORT");
 		searchParams2.put("query", "า฿ร็");

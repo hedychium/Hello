@@ -1,4 +1,4 @@
-﻿package com.jl.robo;
+﻿package com.jl.UTILS;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,7 +20,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 解析excel 上传数据
@@ -46,6 +45,7 @@ public class ExcelData {
                 }
                 //获得当前sheet的开始行
                 int firstRowNum  = sheet.getFirstRowNum();
+//                System.out.println(firstRowNum);
                 //获得当前sheet的结束行
                 int lastRowNum = sheet.getLastRowNum();
                 //循环除了第一行的所有行

@@ -9,12 +9,19 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+
+/***
+ * 
+ * @author li.jiang
+ *使用URLConnection访问url，到得返回页面信息，session、cookie不好实现
+ */
+
 public class anotherTest {
 
 	public static void main(String[] args) {
 		
 		//"https://my.oschina.net/dtz/blog/1790159"
-		String strurl = "http://robor.wmcloud-qa.com/v2/home";
+		String strurl = "https://robo.datayes.com/v2/fastreport/search?input=%E9%94%90%E7%A7%91%E6%BF%80%E5%85%89#reportSearch";
 		// TODO Auto-generated method stub
 		URL url;
 		try {
@@ -37,6 +44,11 @@ public class anotherTest {
 				try {
 					BufferedReader br = new BufferedReader(
 							new InputStreamReader(is, "GB2312"));
+					//按行读取并打印
+		            String line=null;
+		            while((line=br.readLine())!=null){
+		            	System.out.println(line);
+		            }
 					
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block

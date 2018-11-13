@@ -9,14 +9,16 @@ import java.util.Set;
 import com.google.gson.*;
 
 /**
- * ʹ��Gson�Ƚ�����json�ַ����Ƿ�ȼ�
- */
+ * 使用Gson比较两个json字符串是否等价 
+ * */
+
+
 public class JsonSameUtil {
     private static final Gson gson = new Gson();
     private static final JsonParser parser = new JsonParser();
- 
+     
     /**
-     * �Ƚ�����bean�Ƿ�ȼ�
+     * 比较两个json字符串是否等价
      */
     public static boolean same(Object a, Object b) {
         if (a == null) {
@@ -26,7 +28,7 @@ public class JsonSameUtil {
     }
  
     /**
-     * �Ƚ�����json�ַ����Ƿ�ȼ�
+     * 锟饺斤拷锟斤拷锟斤拷json锟街凤拷锟斤拷锟角凤拷燃锟�
      */
     public static boolean same(String a, String b) {
         if (a == null) {
@@ -105,8 +107,8 @@ public class JsonSameUtil {
         List<String> obj2 = Arrays.asList("1", "3", "2");
         System.out.println(JsonSameUtil.same(obj1, obj2)); // true
  
-        String str1 = "[{\"a\":1},{\"b\":2},{\"c\":3}]";
-        String str2 = "[{\"a\":1},{\"c\":3},{\"b\":2}]";
+        String str1 = "[{\"a\":1,\"d\":4},{\"b\":2},{\"c\":3}]";
+        String str2 = "[{\"a\":1,\"d\":4},{\"c\":3},{\"b\":2}]";
         System.out.println(JsonSameUtil.same(str1, str2)); // true
     }
 
